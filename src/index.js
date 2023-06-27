@@ -24,26 +24,18 @@ function Header() {
 }
 
 function Menu() {
+  const pizzas = [];
+  const numPizzas = pizzas.length;
   return (
     <main className="menu">
       <h2>Our Menu</h2>
-      <ul className="pizzas">
-        {pizzaData.map((pizza) => (
-          <Pizza pizzaObj={pizza} key={pizza.name} />
-        ))}
-      </ul>
-      {/*<Pizza
-        name="Pizza Spinaci"
-        ingredients="Tomato, mozarella, spinach, and ricotta cheese"
-        photoName="pizzas/spinaci.jpg"
-        price={12}
-      />
-      <Pizza
-        name="Pizza Funghi"
-        ingredients="Tomato, mushrooms"
-        photoName="pizzas/funghi.jpg"
-        price={15}
-  />*/}
+      {numPizzas > 0 && (
+        <ul className="pizzas">
+          {pizzaData.map((pizza) => (
+            <Pizza pizzaObj={pizza} key={pizza.name} />
+          ))}
+        </ul>
+      )}
     </main>
   );
 }
@@ -55,20 +47,33 @@ function Pizza(props) {
       <div>
         <h3> {props.pizzaObj.name}</h3>
         <p> {props.pizzaObj.ingredients}</p>
-        <span>{props.pizzaObj.price + 3 + "$"}</span>
+        <span>{props.pizzaObj.price + "$"}</span>
       </div>
     </li>
   );
 }
 function Footer() {
   const hour = new Date().getHours();
-  const openHour = 12;
+  const openHour = 8;
   const closeHour = 22;
   const isOpen = hour >= openHour && hour <= closeHour;
 
   return (
     <footer className="footer">
-      {new Date().toLocaleDateString()} We're currently open
+      {isOpen ? (
+        <div className="order">
+          <p>We're opne until {closeHour}:00. Come visit us or order online.</p>
+          <button className="btn">Order</button>
+        </div>
+      ) : (
+        <div className="order">
+          <p>
+            We're closed until {openHour}:00. Come early in the morning for some
+            fresh pizza.
+          </p>
+          <button className="btn">Order</button>
+        </div>
+      )}
     </footer>
   );
 }
