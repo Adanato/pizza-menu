@@ -16,10 +16,9 @@ function App() {
 }
 
 function Header() {
-  const cssss = {};
   return (
     <header className="header">
-      <h1 style={cssss}>Fast React Pizza Co.</h1>
+      <h1>Fast React Pizza Co.</h1>
     </header>
   );
 }
@@ -27,15 +26,23 @@ function Header() {
 function Menu() {
   const pizzas = pizzaData;
   const numPizzas = pizzas.length;
+  //React fragment utilization below
   return (
     <main className="menu">
       <h2>Our Menu</h2>
+
       {numPizzas > 0 ? (
-        <ul className="pizzas">
-          {pizzaData.map((pizza) => (
-            <Pizza pizzaObj={pizza} key={pizza.name} />
-          ))}
-        </ul>
+        <>
+          <p>
+            Authentic Italian cuisine. 6 creative dishes to choose from. All
+            from our stove oven, all organic, all delicious.
+          </p>
+          <ul className="pizzas">
+            {pizzaData.map((pizza) => (
+              <Pizza pizzaObj={pizza} key={pizza.name} />
+            ))}
+          </ul>
+        </>
       ) : (
         <p>We're still working on our menu. Please come back later.</p>
       )}
@@ -44,14 +51,14 @@ function Menu() {
 }
 
 function Pizza({ pizzaObj }) {
-  if (pizzaObj.soldOut) return null;
+  //if (pizzaObj.soldOut) return null;
   return (
-    <li className="pizza">
+    <li className={`pizza ${pizzaObj.soldOut ? "sold-out" : ""}`}>
       <img src={pizzaObj.photoName} alt={pizzaObj.name}></img>
       <div>
         <h3> {pizzaObj.name}</h3>
         <p> {pizzaObj.ingredients}</p>
-        <span>{pizzaObj.price + "$"}</span>
+        <span>{pizzaObj.soldOut ? "Soldout" : pizzaObj.price + "$"}</span>
       </div>
     </li>
   );
